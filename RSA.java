@@ -1,6 +1,7 @@
 package main;
 
 import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
 import java.util.Random;
 
 public class RSA {
@@ -12,7 +13,7 @@ public class RSA {
 	public RSA() {
 		
 		this.primes = new String[] {
-			//primes	
+				//primes
 		};
 		
 		changePrimes();
@@ -54,7 +55,7 @@ public class RSA {
 		return true;
 	}
 	
-	public String encript(String m) {
+	public String encript(String m) {		
 		String bin_s = StringToBinary(m);
 		BigInteger bin_d = BinaryToDecimal(bin_s);
 		return DecimalToHex(bin_d.modPow(this.e, this.n));
@@ -181,12 +182,12 @@ public class RSA {
 	
 	private String DecimalToString(BigInteger bi) {
 		String binary = DecimalToBinary(bi);
-		StringBuffer buff = new StringBuffer();
+		byte[] b = new byte[binary.length()/8];
 		for(int i=0; i<binary.length(); i = i+8) {
-			char c = (char) (Integer.parseInt(binary.substring(i, i+1)) * 128 + Integer.parseInt(binary.substring(i+1, i+2)) * 64 + Integer.parseInt(binary.substring(i+2, i+3)) * 32 + Integer.parseInt(binary.substring(i+3, i+4)) * 16 + Integer.parseInt(binary.substring(i+4, i+5)) * 8 + Integer.parseInt(binary.substring(i+5, i+6)) * 4 + Integer.parseInt(binary.substring(i+6, i+7)) * 2 + Integer.parseInt(binary.substring(i+7, i+8)));
-			buff.append(c);
+			byte c = (byte) (Integer.parseInt(binary.substring(i, i+1)) * 128 + Integer.parseInt(binary.substring(i+1, i+2)) * 64 + Integer.parseInt(binary.substring(i+2, i+3)) * 32 + Integer.parseInt(binary.substring(i+3, i+4)) * 16 + Integer.parseInt(binary.substring(i+4, i+5)) * 8 + Integer.parseInt(binary.substring(i+5, i+6)) * 4 + Integer.parseInt(binary.substring(i+6, i+7)) * 2 + Integer.parseInt(binary.substring(i+7, i+8)));
+			b[i/8] = c;
 		}
-		return buff.toString();
+		return new String(b, StandardCharsets.UTF_8);
 	}
 
 }
