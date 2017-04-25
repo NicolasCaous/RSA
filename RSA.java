@@ -7,7 +7,7 @@ public class RSA {
 	
 	private BigInteger e, d, p, q, n, psi;
 	private String[] primes;
-	private static Random rand = new Random();
+	private static Random rand;
 	
 	public RSA() {
 		
@@ -77,6 +77,8 @@ public class RSA {
 	}
 	
 	public void changePrimes() {
+		rand = new Random(System.currentTimeMillis());
+		
 		this.p = new BigInteger(this.primes[rand.nextInt(this.primes.length)]);
 		do {
 			this.q = new BigInteger(this.primes[rand.nextInt(this.primes.length)]);
